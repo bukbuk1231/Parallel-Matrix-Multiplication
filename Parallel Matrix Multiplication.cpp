@@ -24,7 +24,7 @@ int main() {
     vector<vector<int>> m2 = init_matrix(2, 2, true);
 
     // vector<vector<int>> mult = mmser(m1, m2);
-    vector<vector<int>> mult = mmpar(m1, m2);
+    // vector<vector<int>> mult = mmpar(m1, m2);
 
     cout << "left\n" << matrix_to_string(m1) << "right\n" << matrix_to_string(m2) << "result\n" << matrix_to_string(mult);
 }
