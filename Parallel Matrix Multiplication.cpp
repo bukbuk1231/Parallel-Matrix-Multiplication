@@ -13,18 +13,25 @@ using namespace std;
 
 vector<vector<int>> mmser(vector<vector<int>>, vector<vector<int>>);
 vector<vector<int>> mmpar(vector<vector<int>>, vector<vector<int>>);
+vector<vector<int>> mm1d(vector<vector<int>>, vector<vector<int>>);
+vector<vector<int>> mm2d(vector<vector<int>>, vector<vector<int>>);
 vector<vector<int>> init_matrix(int, int, bool);
 int get_random_number(int);
 string matrix_to_string(vector<vector<int>>);
 
 int main() {
     srand(time(NULL));
+    omp_set_num_threads(16);
 
-    vector<vector<int>> m1 = init_matrix(2, 2, true);
-    vector<vector<int>> m2 = init_matrix(2, 2, true);
+    //vector<vector<int>> m1 = init_matrix(255, 255, true);
+    //vector<vector<int>> m2 = init_matrix(255, 255, true);
+    vector<vector<int>> m1{ {1, 2, 3}, {4, 5, 6} };
+    vector<vector<int>> m2{ {7, 8}, {9, 10}, {11, 12} };
 
     // vector<vector<int>> mult = mmser(m1, m2);
     // vector<vector<int>> mult = mmpar(m1, m2);
+    // vector<vector<int>> mult = mm1d(m1, m2);
+    vector<vector<int>> mult = mm2d(m1, m2);
 
     cout << "left\n" << matrix_to_string(m1) << "right\n" << matrix_to_string(m2) << "result\n" << matrix_to_string(mult);
 }
@@ -33,6 +40,8 @@ vector<vector<int>> mmser(vector<vector<int>> m1, vector<vector<int>> m2) {
     int m = m1.size(), n = m1[0].size(), n2 = m2[0].size();
     vector<vector<int>> res = init_matrix(m, n2, false);
 
+    double timeSpent = 0.0;
+    clock_t begin = clock();
     for (int i = 0; i < m; i++) {
         for (int k = 0; k < n; k++) {
             for (int j = 0; j < n2; j++) {
@@ -40,6 +49,9 @@ vector<vector<int>> mmser(vector<vector<int>> m1, vector<vector<int>> m2) {
             }
         }
     }
+    clock_t end = clock();
+    timeSpent += (double)(end - begin) / CLOCKS_PER_SEC;
+    printf("Times used is %f seconds", timeSpent);
     return res;
 }
 
@@ -47,14 +59,80 @@ vector<vector<int>> mmpar(vector<vector<int>> m1, vector<vector<int>> m2) {
     int m = m1.size(), n = m1[0].size(), n2 = m2[0].size();
     vector<vector<int>> res = init_matrix(m, n2, false);
 
-    #pragma omp parallel
+    double timeSpent = 0.0;
+    clock_t begin = clock();
+
+    #pragma omp parallel for
     for (int i = 0; i < m; i++) {
+        //int id = omp_get_thread_num();
+        //cout << id << endl;
+
         for (int k = 0; k < n; k++) {
             for (int j = 0; j < n2; j++) {
                 res[i][j] += m1[i][k] * m2[k][j];
             }
         }
     }
+
+    clock_t end = clock();
+    timeSpent += (double)(end - begin) / CLOCKS_PER_SEC;
+    printf("Times used is %f seconds", timeSpent);
+    return res;
+}
+
+vector<vector<int>> mm1d(vector<vector<int>> m1, vector<vector<int>> m2) {
+    int m = m1.size(), n = m1[0].size(), n2 = m2[0].size();
+    vector<vector<int>> res = init_matrix(m, n2, false);
+
+    double timeSpent = 0.0;
+    clock_t begin = clock();
+
+    #pragma omp parallel
+    {
+        int thread_id = omp_get_thread_num();
+        if (thread_id < m) {
+            for (int i = 0; i < n2; i++) {
+                for (int j = 0; j < n; j++) {
+                    res[thread_id][i] += m1[thread_id][j] * m2[j][i];
+                }
+            }
+        }
+        
+    }
+
+    clock_t end = clock();
+    timeSpent += (double)(end - begin) / CLOCKS_PER_SEC;
+    printf("Times used is %f seconds", timeSpent);
+    return res;
+}
+
+vector<vector<int>> mm2d(vector<vector<int>> m1, vector<vector<int>> m2) {
+    int m = m1.size(), n = m1[0].size(), n2 = m2[0].size();
+    vector<vector<int>> res = init_matrix(m, n2, false);
+
+    double timeSpent = 0.0;
+    clock_t begin = clock();
+
+    omp_set_nested(1);
+    #pragma omp parallel
+    {
+        int thread_id1 = omp_get_thread_num();
+        if (thread_id1 < m) {
+            #pragma omp parallel
+            {
+                int thread_id2 = omp_get_thread_num();
+                if (thread_id2 < n2) {
+                    for (int j = 0; j < n; j++) {
+                        res[thread_id1][thread_id2] += m1[thread_id1][j] * m2[j][thread_id2];
+                    }
+                }
+            }
+        }
+    }
+
+    clock_t end = clock();
+    timeSpent += (double)(end - begin) / CLOCKS_PER_SEC;
+    printf("Times used is %f seconds", timeSpent);
     return res;
 }
 
