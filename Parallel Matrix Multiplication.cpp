@@ -59,7 +59,7 @@ vector<vector<int> > mmser(vector<vector<int> > m1, vector<vector<int> > m2) {
     }
     clock_t end = clock();
     timeSpent += (double)(end - begin) / CLOCKS_PER_SEC;
-    printf("Serial Elapsed Time: %f seconds\n", timeSpent);
+    printf("Serial Elapsed Time: %.8f seconds\n", timeSpent);
     return res;
 }
 
@@ -84,7 +84,7 @@ vector<vector<int> > mmpar(vector<vector<int> > m1, vector<vector<int> > m2) {
 
     clock_t end = clock();
     timeSpent += (double)(end - begin) / CLOCKS_PER_SEC;
-    printf("Parallel Elapsed Time: %f seconds\n", timeSpent);
+    printf("Parallel Elapsed Time: %.8f seconds\n", timeSpent);
     return res;
 }
 
@@ -110,7 +110,7 @@ vector<vector<int> > mm1d(vector<vector<int> > m1, vector<vector<int> > m2) {
 
     clock_t end = clock();
     timeSpent += (double)(end - begin) / CLOCKS_PER_SEC;
-    printf("MM1D Elapsed Time: %f seconds\n", timeSpent);
+    printf("MM1D Elapsed Time: %.8f seconds\n", timeSpent);
     return res;
 }
 
@@ -140,7 +140,7 @@ vector<vector<int> > mm2d(vector<vector<int> > m1, vector<vector<int> > m2) {
 
     clock_t end = clock();
     timeSpent += (double)(end - begin) / CLOCKS_PER_SEC;
-    printf("MM2D Elapsed Time: %f seconds\n", timeSpent);
+    printf("MM2D Elapsed Time: %.8f seconds\n", timeSpent);
     return res;
 }
 
