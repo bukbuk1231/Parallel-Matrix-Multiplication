@@ -11,13 +11,13 @@
 
 using namespace std;
 
-vector<vector<int>> mmser(vector<vector<int>>, vector<vector<int>>);
-vector<vector<int>> mmpar(vector<vector<int>>, vector<vector<int>>);
-vector<vector<int>> mm1d(vector<vector<int>>, vector<vector<int>>);
-vector<vector<int>> mm2d(vector<vector<int>>, vector<vector<int>>);
-vector<vector<int>> init_matrix(int, int, bool);
+vector<vector<int> > mmser(vector<vector<int> >, vector<vector<int> >);
+vector<vector<int> > mmpar(vector<vector<int> >, vector<vector<int> >);
+vector<vector<int> > mm1d(vector<vector<int> >, vector<vector<int> >);
+vector<vector<int> > mm2d(vector<vector<int> >, vector<vector<int> >);
+vector<vector<int> > init_matrix(int, int, bool);
 int get_random_number(int);
-string matrix_to_string(vector<vector<int>>);
+string matrix_to_string(vector<vector<int> >);
 
 int main(int argc, char **argv) {
     int threads = atoi(argv[1]);
@@ -28,12 +28,12 @@ int main(int argc, char **argv) {
     srand(time(NULL));
     omp_set_num_threads(threads);
 
-    vector<vector<int>> m1 = init_matrix(m, n, true);
-    vector<vector<int>> m2 = init_matrix(n, q, true);
-    //vector<vector<int>> m1{ {1, 2, 3}, {4, 5, 6} };
-    //vector<vector<int>> m2{ {7, 8}, {9, 10}, {11, 12} };
+    vector<vector<int> > m1 = init_matrix(m, n, true);
+    vector<vector<int> > m2 = init_matrix(n, q, true);
+    //vector<vector<int> > m1{ {1, 2, 3}, {4, 5, 6} };
+    //vector<vector<int> > m2{ {7, 8}, {9, 10}, {11, 12} };
 
-    vector<vector<int>> mult;
+    vector<vector<int> > mult;
     mult = mmser(m1, m2);
     mult = mmpar(m1, m2);
     mult = mm1d(m1, m2);
@@ -42,9 +42,9 @@ int main(int argc, char **argv) {
     // cout << "left\n" << matrix_to_string(m1) << "right\n" << matrix_to_string(m2) << "result\n" << matrix_to_string(mult);
 }
 
-vector<vector<int>> mmser(vector<vector<int>> m1, vector<vector<int>> m2) {
+vector<vector<int> > mmser(vector<vector<int> > m1, vector<vector<int> > m2) {
     int m = m1.size(), n = m1[0].size(), n2 = m2[0].size();
-    vector<vector<int>> res = init_matrix(m, n2, false);
+    vector<vector<int> > res = init_matrix(m, n2, false);
 
     double timeSpent = 0.0;
     clock_t begin = clock();
@@ -61,9 +61,9 @@ vector<vector<int>> mmser(vector<vector<int>> m1, vector<vector<int>> m2) {
     return res;
 }
 
-vector<vector<int>> mmpar(vector<vector<int>> m1, vector<vector<int>> m2) {
+vector<vector<int> > mmpar(vector<vector<int> > m1, vector<vector<int> > m2) {
     int m = m1.size(), n = m1[0].size(), n2 = m2[0].size();
-    vector<vector<int>> res = init_matrix(m, n2, false);
+    vector<vector<int> > res = init_matrix(m, n2, false);
 
     double timeSpent = 0.0;
     clock_t begin = clock();
@@ -86,9 +86,9 @@ vector<vector<int>> mmpar(vector<vector<int>> m1, vector<vector<int>> m2) {
     return res;
 }
 
-vector<vector<int>> mm1d(vector<vector<int>> m1, vector<vector<int>> m2) {
+vector<vector<int> > mm1d(vector<vector<int> > m1, vector<vector<int> > m2) {
     int m = m1.size(), n = m1[0].size(), n2 = m2[0].size();
-    vector<vector<int>> res = init_matrix(m, n2, false);
+    vector<vector<int> > res = init_matrix(m, n2, false);
 
     double timeSpent = 0.0;
     clock_t begin = clock();
@@ -112,9 +112,9 @@ vector<vector<int>> mm1d(vector<vector<int>> m1, vector<vector<int>> m2) {
     return res;
 }
 
-vector<vector<int>> mm2d(vector<vector<int>> m1, vector<vector<int>> m2) {
+vector<vector<int> > mm2d(vector<vector<int> > m1, vector<vector<int> > m2) {
     int m = m1.size(), n = m1[0].size(), n2 = m2[0].size();
-    vector<vector<int>> res = init_matrix(m, n2, false);
+    vector<vector<int> > res = init_matrix(m, n2, false);
 
     double timeSpent = 0.0;
     clock_t begin = clock();
@@ -142,8 +142,8 @@ vector<vector<int>> mm2d(vector<vector<int>> m1, vector<vector<int>> m2) {
     return res;
 }
 
-vector<vector<int>> init_matrix(int row, int col, bool random) {
-    vector<vector<int>> matrix;
+vector<vector<int> > init_matrix(int row, int col, bool random) {
+    vector<vector<int> > matrix;
     for (int i = 0; i < row; i++) {
         vector<int> tmp;
         for (int j = 0; j < col; j++) {
@@ -158,7 +158,7 @@ int get_random_number(int bound) {
     return rand() % bound + 1;
 }
 
-string matrix_to_string(vector<vector<int>> matrix) {
+string matrix_to_string(vector<vector<int> > matrix) {
     string res = "";
     int m = matrix.size(), n = matrix[0].size();
     for (int i = 0; i < m; i++) {
