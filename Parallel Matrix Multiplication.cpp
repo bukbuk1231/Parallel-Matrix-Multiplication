@@ -25,6 +25,8 @@ int main(int argc, char **argv) {
     int n = atoi(argv[3]);
     int q = atoi(argv[4]);
 
+    printf("P: %d\nMatrix Dimensions: (%d, %d), (%d, %d)", threads, m, n, n, q);
+
     srand(time(NULL));
     omp_set_num_threads(threads);
 
@@ -57,7 +59,7 @@ vector<vector<int> > mmser(vector<vector<int> > m1, vector<vector<int> > m2) {
     }
     clock_t end = clock();
     timeSpent += (double)(end - begin) / CLOCKS_PER_SEC;
-    printf("Elapsed Time: %f seconds\n", timeSpent);
+    printf("Serial Elapsed Time: %f seconds\n", timeSpent);
     return res;
 }
 
@@ -82,7 +84,7 @@ vector<vector<int> > mmpar(vector<vector<int> > m1, vector<vector<int> > m2) {
 
     clock_t end = clock();
     timeSpent += (double)(end - begin) / CLOCKS_PER_SEC;
-    printf("Elapsed Time: %f seconds\n", timeSpent);
+    printf("Parallel Elapsed Time: %f seconds\n", timeSpent);
     return res;
 }
 
@@ -108,7 +110,7 @@ vector<vector<int> > mm1d(vector<vector<int> > m1, vector<vector<int> > m2) {
 
     clock_t end = clock();
     timeSpent += (double)(end - begin) / CLOCKS_PER_SEC;
-    printf("Elapsed Time: %f seconds\n", timeSpent);
+    printf("MM1D Elapsed Time: %f seconds\n", timeSpent);
     return res;
 }
 
@@ -138,7 +140,7 @@ vector<vector<int> > mm2d(vector<vector<int> > m1, vector<vector<int> > m2) {
 
     clock_t end = clock();
     timeSpent += (double)(end - begin) / CLOCKS_PER_SEC;
-    printf("Elapsed Time: %f seconds\n", timeSpent);
+    printf("MM2D Elapsed Time: %f seconds\n", timeSpent);
     return res;
 }
 
