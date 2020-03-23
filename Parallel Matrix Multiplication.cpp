@@ -19,12 +19,17 @@ vector<vector<int>> init_matrix(int, int, bool);
 int get_random_number(int);
 string matrix_to_string(vector<vector<int>>);
 
-int main() {
-    srand(time(NULL));
-    omp_set_num_threads(16);
+int main(int argc, char **argv) {
+    int threads = atoi(argv[1]);
+    int m = atoi(argv[2]);
+    int n = atoi(argv[3]);
+    int q = atoi(argv[4]);
 
-    vector<vector<int>> m1 = init_matrix(24, 24, true);
-    vector<vector<int>> m2 = init_matrix(24, 7, true);
+    srand(time(NULL));
+    omp_set_num_threads(threads);
+
+    vector<vector<int>> m1 = init_matrix(m, n, true);
+    vector<vector<int>> m2 = init_matrix(n, q, true);
     //vector<vector<int>> m1{ {1, 2, 3}, {4, 5, 6} };
     //vector<vector<int>> m2{ {7, 8}, {9, 10}, {11, 12} };
 
