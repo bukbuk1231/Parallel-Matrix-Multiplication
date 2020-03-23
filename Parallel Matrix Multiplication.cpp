@@ -1,5 +1,5 @@
 // Parallel Matrix Multiplication.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+// Junda Lou
 
 #include <iostream>
 #include <omp.h>
@@ -23,17 +23,18 @@ int main() {
     srand(time(NULL));
     omp_set_num_threads(16);
 
-    //vector<vector<int>> m1 = init_matrix(255, 255, true);
-    //vector<vector<int>> m2 = init_matrix(255, 255, true);
-    vector<vector<int>> m1{ {1, 2, 3}, {4, 5, 6} };
-    vector<vector<int>> m2{ {7, 8}, {9, 10}, {11, 12} };
+    vector<vector<int>> m1 = init_matrix(24, 24, true);
+    vector<vector<int>> m2 = init_matrix(24, 7, true);
+    //vector<vector<int>> m1{ {1, 2, 3}, {4, 5, 6} };
+    //vector<vector<int>> m2{ {7, 8}, {9, 10}, {11, 12} };
 
-    // vector<vector<int>> mult = mmser(m1, m2);
-    // vector<vector<int>> mult = mmpar(m1, m2);
-    // vector<vector<int>> mult = mm1d(m1, m2);
-    vector<vector<int>> mult = mm2d(m1, m2);
+    vector<vector<int>> mult;
+    mult = mmser(m1, m2);
+    mult = mmpar(m1, m2);
+    mult = mm1d(m1, m2);
+    mult = mm2d(m1, m2);
 
-    cout << "left\n" << matrix_to_string(m1) << "right\n" << matrix_to_string(m2) << "result\n" << matrix_to_string(mult);
+    // cout << "left\n" << matrix_to_string(m1) << "right\n" << matrix_to_string(m2) << "result\n" << matrix_to_string(mult);
 }
 
 vector<vector<int>> mmser(vector<vector<int>> m1, vector<vector<int>> m2) {
@@ -51,7 +52,7 @@ vector<vector<int>> mmser(vector<vector<int>> m1, vector<vector<int>> m2) {
     }
     clock_t end = clock();
     timeSpent += (double)(end - begin) / CLOCKS_PER_SEC;
-    printf("Times used is %f seconds", timeSpent);
+    printf("Elapsed Time: %f seconds\n", timeSpent);
     return res;
 }
 
@@ -76,7 +77,7 @@ vector<vector<int>> mmpar(vector<vector<int>> m1, vector<vector<int>> m2) {
 
     clock_t end = clock();
     timeSpent += (double)(end - begin) / CLOCKS_PER_SEC;
-    printf("Times used is %f seconds", timeSpent);
+    printf("Elapsed Time: %f seconds\n", timeSpent);
     return res;
 }
 
@@ -102,7 +103,7 @@ vector<vector<int>> mm1d(vector<vector<int>> m1, vector<vector<int>> m2) {
 
     clock_t end = clock();
     timeSpent += (double)(end - begin) / CLOCKS_PER_SEC;
-    printf("Times used is %f seconds", timeSpent);
+    printf("Elapsed Time: %f seconds\n", timeSpent);
     return res;
 }
 
@@ -132,7 +133,7 @@ vector<vector<int>> mm2d(vector<vector<int>> m1, vector<vector<int>> m2) {
 
     clock_t end = clock();
     timeSpent += (double)(end - begin) / CLOCKS_PER_SEC;
-    printf("Times used is %f seconds", timeSpent);
+    printf("Elapsed Time: %f seconds\n", timeSpent);
     return res;
 }
 
