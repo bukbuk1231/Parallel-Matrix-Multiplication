@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
     int n = atoi(argv[3]);
     int q = atoi(argv[4]);
 
-    printf("P: %d\nMatrix Dimensions: (%d, %d), (%d, %d)", threads, m, n, n, q);
+    printf("P: %d\nMatrix Dimensions: (%d, %d), (%d, %d)\n", threads, m, n, n, q);
 
     srand(time(NULL));
     omp_set_num_threads(threads);
